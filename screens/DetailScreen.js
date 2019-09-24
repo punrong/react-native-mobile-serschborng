@@ -127,7 +127,7 @@ export default class HomeView extends React.Component {
       );
     else 
       return (
-        <MentorScreen/>
+        <MentorScreen navigation={this.props.navigation}/>
       )
   }
 

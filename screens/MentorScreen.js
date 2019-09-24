@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Card from '../components/Card';
 
-export default class MenteeList extends Component {
+export default class MenteeList extends React.Component {
 
     state = {
         mentees: 
@@ -43,6 +43,7 @@ export default class MenteeList extends Component {
     componentWillMount() {}
 
     render() {
+        const navigation = this.props.navigation;
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.listStyle}>{
@@ -50,7 +51,7 @@ export default class MenteeList extends Component {
                         const result = [];
                         mentees.forEach(
                             (mentee, i) => {
-                                result.push(<Card key={i} mentee={mentee} />);
+                                result.push(<Card key={i} mentee={mentee} navigation={navigation} />);
                             }
                         );
                         return result;

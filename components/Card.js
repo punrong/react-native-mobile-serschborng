@@ -48,7 +48,7 @@ const Card = (props) => {
                 <Text>Appointments: {props.mentee.appointments}</Text>
             </View>
 
-            <Button onPress={() => Linking.openURL(props.mentee.source)}>View Profile</Button>
+            <Button onPress={() => props.navigation.navigate('MentorProfileScreen')}>View Profile</Button>
         </View>
     );
 };
