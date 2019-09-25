@@ -100,7 +100,7 @@ export default class MentorProfileScreen extends React.Component {
                             <Text style={{flexDirection: 'row', alignSelf: 'flex-start', flex: 1, flexWrap: 'wrap', fontSize: 12}}>
                                   2017: 
                                     <Text style={{fontWeight: 'bold'}}> One Semester Exchange Program, Temasek</Text>
-                        </Text>
+                            </Text>
                       </View>
 
                       <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10}}>
@@ -111,25 +111,18 @@ export default class MentorProfileScreen extends React.Component {
                             </Text>
                       </View>
 
-                      <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10}}>
-                            <Icon color='blue' name="star" type="font-awesome" size={24} style={{marginRight: 10}}/>
-                            <Text style={{flexDirection: 'row', alignSelf: 'flex-start', flex: 1, flexWrap: 'wrap', fontSize: 12}}>
-                                  2017: 
-                                    <Text style={{fontWeight: 'bold'}}> One Semester Exchange Program, Temasek</Text>
-                        </Text>
-                      </View>
-
                       <Button
                     onLayout={this._onLayoutEvent}
                     title="Subscribe"
                     onPress={() => navigation.navigate('SubscribeFormScreen')}
                     style={{
-                      position: 'absolute', 
-                      alignSelf: 'center', 
-                      fontWeight: 'bold',
-                      top: 10}}
-                    buttonStyle={{backgroundColor: '#ff2b55', borderRadius: 10, width: deviceWidth*0.95}}/>
-
+                      alignSelf: 'center',
+                      alignContent: 'center',
+                      marginLeft: 10,
+                      marginRight: 10,
+                      marginTop: 10,
+                      }}
+                    buttonStyle={{backgroundColor: '#ff2b55', borderRadius: 10, width: deviceWidth*0.8}}/>
                 </View>
                </Card>
         </ScrollView>
@@ -183,7 +176,7 @@ const styles = {
 
   scrollViewStyle: {
     flexGrow: 1, 
-    paddingBottom: 40,
+    paddingBottom: 10,
     alignItems: 'center'
   },
 
