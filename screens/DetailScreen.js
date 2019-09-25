@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Dimensions, Image, ActivityIndicator } from 'react-native';
 import { Card, ButtonGroup} from 'react-native-elements';
 import MentorScreen from './MentorScreen'
 
@@ -97,7 +97,8 @@ export default class HomeView extends React.Component {
             containerStyle = {styles.cardImageContainerStyle}>
               <Image 
                   source= {{ uri: this.state.content.imageURI }} 
-                  style = {{height: 100, width: '100%', resizeMode : 'stretch', margin: 5 }}/>
+                  style = {{height: 100, width: '100%', resizeMode : 'stretch', margin: 5 }}
+                  PlaceholderContent={<ActivityIndicator/>}/>
           </Card>
             
             <Card
@@ -152,15 +153,22 @@ export default class HomeView extends React.Component {
       cardImageContainerStyle:{
         borderColor: 'rgba(0,0,0,0)',
         shadowColor: 'rgba(0,0,0,0)',
+        position: "absolute",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        margin: 5,
+        padding: 0,
         shadowOpacity: 0,
         width: deviceWidth*0.9,
         shadowRadius: 0
       },
 
       cardContainerStyle: {
+        marginTop: 120,
         borderRadius: 20, 
         borderColor: 'rgba(0,0,0,0.5)', 
-        margin:10,
         backgroundColor: '#fff', 
         width: deviceWidth*0.9
       },

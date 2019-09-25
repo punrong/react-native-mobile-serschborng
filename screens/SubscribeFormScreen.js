@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text} from "react-native";
+import {View} from "react-native";
 import {Button, Input} from "react-native-elements";
 
 export default class SubscribeFormScreen extends React.Component {
 
   static navigationOptions = {
-    title: 'Subscript Form',
+    title: 'Subscription Form',
     headerStyle:{
       backgroundColor:  'rgba(0,122,255,0.5)',
     },
