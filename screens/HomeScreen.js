@@ -340,15 +340,20 @@ export default class HomeView extends React.Component {
 
       cardContainerStyle: {
         paddingTop: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingLeft: 2,
+        paddingRight: 2,
         borderRadius: 20, 
         borderColor: 'rgba(0,0,0,0.5)',
         marginLeft: 5,
         marginRight: 5,
         marginTop: 5,
         marginBottom:5,
-        backgroundColor: 'rgba(0,122,255,0.5)', 
-        width: 0.9*deviceWidth/2
+        backgroundColor: '#fff', 
+        width: 0.9*deviceWidth/2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,  
+        elevation: 5
       }
   })

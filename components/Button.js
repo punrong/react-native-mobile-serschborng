@@ -28,6 +28,7 @@ const Button = (props) => {
 const styles = StyleSheet.create({
     buttonStyle: {
         alignItems: 'center',
+        alignContent: 'center',
         paddingLeft: 10,
         paddingRight: 10,
         paddingTop: 5,

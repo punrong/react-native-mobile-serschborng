@@ -61,8 +61,13 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#000',
         borderRadius: 20,
-        backgroundColor: 'rgba(0,122,255,0.5)',
-        marginVertical: 15
+        backgroundColor: '#fff',
+        marginVertical: 15,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,  
+        elevation: 5
     },
     imageStyle: {
         width: defaultStyleConfig.imageSize,
