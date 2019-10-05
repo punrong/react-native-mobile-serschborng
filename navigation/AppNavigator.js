@@ -1,12 +1,16 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation'
-import HomeScreen from '../screens/HomeScreen'
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import React from 'react';
+import { Ionicons } from 'react-native-vector-icons';
+import OtherScreen from '../screens/OtherScreen';
+import HomeScreen from '../screens/HomeScreen';
 import DetailScreen from '../screens/DetailScreen';
-import MentorScreen from '../screens/MentorScreen'
+import MentorScreen from '../screens/MentorScreen';
 import MentorProfileScreen from "../screens/MentorProfileScreen";
 import SubscribeFormScreen from "../screens/SubscribeFormScreen";
 
-const AppNavigator = createStackNavigator({
+const HomeStack = createStackNavigator({
     HomeScreen: { screen: HomeScreen },
     DetailScreen: {screen: DetailScreen},
     MentorScreen : {screen: MentorScreen},
@@ -17,6 +21,39 @@ const AppNavigator = createStackNavigator({
   initialRouteName: 'HomeScreen',
 });
 
-const App = createAppContainer(AppNavigator);
+const OtherStack = createStackNavigator({
+  OtherScreen: { screen: OtherScreen},
+});
+
+const App = createAppContainer(
+    createBottomTabNavigator(
+  {
+    Home: {
+      screen: HomeStack,
+      navigationOptions: () => ({
+        tabBarIcon: ({tintColor}) => (
+          <Ionicons name='ios-home' size={25} color={tintColor}/>
+        )
+      })
+    },
+
+    Others: {
+      screen: OtherStack,
+      navigationOptions: () => ({
+        tabBarIcon: ({tintColor}) => (
+          <Ionicons name='ios-menu' size={25}  color={tintColor}/>
+        )
+      })
+    },
+  },
+  {
+
+    initialRouteName: 'Home',
+    // tabBarOptions: {
+    //   activeTintColor: '#42f44b',
+    //   inactiveTintColor: 'gray',
+    // },
+  }
+));
 
 export default App;

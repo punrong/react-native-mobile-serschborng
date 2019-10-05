@@ -53,7 +53,7 @@ export default class HomeView extends React.Component {
   }
 
   renderHeader(){
-    const buttons = ['Detail', 'Mentors']
+    const buttons = ['Description', 'Mentors']
     const { selectedIndex } = this.state
     
     return(

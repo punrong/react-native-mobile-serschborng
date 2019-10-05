@@ -1,7 +1,7 @@
 import React from 'react';
+import {Button} from "react-native-elements";
 import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 
-import Button from './Button';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 const deviceWidth = Dimensions.get('window').width;
 
@@ -42,7 +42,17 @@ const Card = (props) => {
                 <Text>Appointments: {props.mentee.appointments}</Text>
             </View>
 
-            <Button onPress={() => props.navigation.navigate('MentorProfileScreen')}>View Profile</Button>
+            <Button
+                    title="View Profile"
+                    onPress={() => props.navigation.navigate('MentorProfileScreen')}
+                    style={{
+                      alignSelf: 'center',
+                      alignContent: 'center',
+                      marginLeft: 10,
+                      marginRight: 10,
+                      marginTop: 10,
+                      }}
+                    buttonStyle={{backgroundColor: '#007aff', borderRadius: 10, width: deviceWidth*0.4}}/>
         </TouchableOpacity>
     );
 };
