@@ -24,7 +24,7 @@ export default class SubscribeFormScreen extends React.Component {
           <Input placeholder={'Phone Number'} containerStyle={{marginBottom: 10}} />
           <Input placeholder={'Email'} containerStyle={{marginBottom: 10}} />
 
-          <Button title={'OK'}/>
+          <Button title={'SUBMIT'}/>
         </View>
     );
   }

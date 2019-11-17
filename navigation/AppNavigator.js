@@ -9,6 +9,9 @@ import DetailScreen from '../screens/DetailScreen';
 import MentorScreen from '../screens/MentorScreen';
 import MentorProfileScreen from "../screens/MentorProfileScreen";
 import SubscribeFormScreen from "../screens/SubscribeFormScreen";
+import AboutUsScreen from "../screens/AboutUsScreen";
+import FeedbackScreen from "../screens/FeedBackScreen";
+import BecomeMentorScreen from "../screens/BecomeMentorScreen";
 
 const HomeStack = createStackNavigator({
     HomeScreen: { screen: HomeScreen },
@@ -23,6 +26,9 @@ const HomeStack = createStackNavigator({
 
 const OtherStack = createStackNavigator({
   OtherScreen: { screen: OtherScreen},
+  AboutUsScreen: { screen: AboutUsScreen},
+  BecomeMentorScreen: { screen: BecomeMentorScreen},
+  FeedbackScreen: {screen: FeedbackScreen}
 });
 
 const App = createAppContainer(

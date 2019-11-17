@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, ScrollView, Dimensions, View, TouchableOpacity } from 'react-native';
 import { Card, ButtonGroup, Icon } from 'react-native-elements';
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+import ProgramCard from '../components/ProgramCard';
   
 const DATA = [
         { 
@@ -131,7 +134,7 @@ const DATA = [
           imageURI: 'https://images.unsplash.com/photo-1535486509975-18366f9825df?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ea59f63a657824d02872bb907fe85e76&auto=format&fit=crop&w=500&q=60' 
         }
   ];
-  
+const programType = ['exchange', 'scholarship', 'competition']
 const deviceWidth = Dimensions.get('window').width;
  
 export default class HomeView extends React.Component {
@@ -148,23 +151,51 @@ export default class HomeView extends React.Component {
     },
   };
   
+  componentWillMount(){
+    var firebaseConfig = {     
+      apiKey : " AIzaSyAE_EoZBl5Rd_iEWfrDdOU-kIYzS-Rw6SI " ,    
+      authDomain : "serschborng-830c3.firebaseapp.com" , 
+    databaseURL : "https://serschborng-830c3.firebaseio.com" ,     
+    projectId : "serschborng-830c3" ,     
+    storageBucket : "serschborng-830c3.appspot.com" ,     
+    messagingSenderId : "793654958178 " ,     
+    appId : " 1: 793654958178: web: 7c04a556def9d7cbda593b " ,     
+    measurementId : " G-PPJYPGZQCG " }; 
+    
+    firebase.initializeApp(firebaseConfig);
+
+    const firestore = firebase.firestore();
+    firestore.collection("Program")
+    .where("country", "==", "Singapore")
+    .get()
+    .then(querySnapshot => {
+      const data = querySnapshot.docs.map(doc => doc.data());
+      console.log(data); // array of cities objects
+    });
+    // firestore.collection('Program').get()
+    // .then(snapshot => {
+    //   snapshot
+    //     .docs
+    //     .forEach(doc => {
+    //       console.log(JSON.parse(doc._document.data.toString()))
+    //     });
+    // });
+  }
+
   constructor () {
     super()
-
+    // this.navigation = this.props.navigation.navigate;
     this.state = {
       selectedIndex: 0, //Button Group index
-      programList : []
+      //Default Display: Exchange Program
+      programList : DATA.filter((item) =>{
+          return item.type === programType[0];
+        })
     }
-
-    //Default Display: Exchange Program
-    DATA.map((item,index)=>{
-      if(item.type === 'exchange')
-      this.state.programList.push(item);
-    })
 
     this.updateIndex = this.updateIndex.bind(this)
   }
-      
+
   //Update ButtonGroup Index 
   updateIndex (selectedIndex) {
     this.setState({selectedIndex});
@@ -172,23 +203,20 @@ export default class HomeView extends React.Component {
 
       switch(selectedIndex){
         case 0:
-          DATA.map((item,index)=>{
-            if(item.type === 'exchange')
-              this.state.programList.push(item);
+          this.state.programList = DATA.filter((item) =>{
+            return item.type === programType[0];
           })
           break;
 
         case 1:
-          DATA.map((item,index)=>{
-            if(item.type === 'scholarship')
-              this.state.programList.push(item);
-            })
+          this.state.programList = DATA.filter((item) =>{
+            return item.type === programType[1];
+          })
           break;
 
         case 2:
-          DATA.map((item,index)=>{
-            if(item.type === 'competition')
-              this.state.programList.push(item);
+            this.state.programList = DATA.filter((item) =>{
+              return item.type === programType[2];
             })
           break;
       }
@@ -237,54 +265,11 @@ export default class HomeView extends React.Component {
     return this.state.programList.map((item, index) => {
        return (
           <View key={item.id}>
-             {this.renderCard(item,navigation)}
+             <ProgramCard navigation={navigation} programList={item}/>
           </View>
           )
     });
  }
-
-  renderCard(item, renderNavigation) {
-    //Select appropriate text size for program's name
-    if(item.program.length < 10)
-      programTextSize = 14;
-    else 
-      programTextSize = 12;
-
-    //Select appropriate text size for country's name
-    if(item.country.length < 10)
-      countryTextSize = 16;
-    else 
-      countryTextSize = 14;
-
-    return (
-      //Make the card touchable
-      <TouchableOpacity 
-        onPress={() => renderNavigation.navigate('DetailScreen')}
-        style={{flexWrap:'wrap', flex: 1, flexDirection: 'row'}}>
-      
-        <Card
-            containerStyle = {styles.cardContainerStyle}
-            key={item.id}
-            image={{ uri: item.imageURI }}>
-            <Text 
-                style={{ marginBottom: 10 , textAlign: 'center', fontSize: programTextSize, fontWeight: 'bold'}}>
-                {item.program}
-            </Text>
-            <Text 
-                style={{ marginBottom: 10 , textAlign: 'center', fontSize: countryTextSize, fontWeight: 'bold'}}>
-                {item.country}
-            </Text>
-            <View 
-                style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <Icon
-                    name='person'
-                    color='#517fa4'/>
-                <Text> Mentors: {item.mentor}</Text>
-            </View>
-        </Card>
-    </TouchableOpacity>
-    );
-  }
 
   render () {
     // "this.props.navigation" only work in render() 
@@ -299,11 +284,11 @@ export default class HomeView extends React.Component {
         {this.renderHeader()}
 
         {
-          <View style = { styles.cardListStyle }>
-            {this.renderAllCards(navigation)}
-          </View>
+           <View style = { styles.cardListStyle }>
+             {this.renderAllCards(navigation)}
+           </View>
         }
-
+        
       </ScrollView>     
       )
     }
@@ -336,24 +321,5 @@ export default class HomeView extends React.Component {
         flexDirection: 'row', 
         flexWrap: 'wrap', 
         justifyContent: 'center'
-     },
-
-      cardContainerStyle: {
-        paddingTop: 10,
-        paddingLeft: 2,
-        paddingRight: 2,
-        borderRadius: 20, 
-        borderColor: 'rgba(0,0,0,0.5)',
-        marginLeft: 5,
-        marginRight: 5,
-        marginTop: 5,
-        marginBottom:5,
-        backgroundColor: '#fff', 
-        width: 0.9*deviceWidth/2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,  
-        elevation: 5
-      }
+     }
   })
