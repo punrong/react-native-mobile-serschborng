@@ -29,8 +29,7 @@ export default class FeedBackScreen extends React.Component {
                 borderColor: 'gray', 
                 borderWidth: 1,  
                 padding: 5,
-                marginTop: 20,
-                marginBottom: 20,
+                marginBottom: 10,
                 height: 100
               }}
                 multiline={true}

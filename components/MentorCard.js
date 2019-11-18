@@ -1,10 +1,9 @@
 import React from 'react';
 import {Button} from "react-native-elements";
 import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
-
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-const deviceWidth = Dimensions.get('window').width;
 
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const defaultStyleConfig = {
     shortName: 20,
     longName: 15,
@@ -13,7 +12,7 @@ const defaultStyleConfig = {
     iconSize: 20
 };
 
-const Card = (props) => {
+const MentorCard = (props) => {
     return (
         <TouchableOpacity
             onPress={() => props.navigation.navigate('MentorProfileScreen')}
@@ -52,14 +51,14 @@ const Card = (props) => {
                       marginRight: 10,
                       marginTop: 10,
                       }}
-                    buttonStyle={{backgroundColor: '#007aff', borderRadius: 10, width: deviceWidth*0.4}}/>
+                    buttonStyle={{backgroundColor: '#007aff', borderRadius: 10, width: DEVICE_WIDTH*0.4}}/>
         </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     boxStyle: {
-        width: 0.9*deviceWidth/2,
+        width: 0.9*DEVICE_WIDTH/2,
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 20,
@@ -105,4 +104,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Card;
+export default MentorCard;

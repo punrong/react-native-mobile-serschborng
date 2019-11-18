@@ -1,12 +1,37 @@
-// Import libraries for making a component
 import React from 'react';
 import {ActivityIndicator, Text, View, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
 import {Button, Image, Card} from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const deviceWidth = Dimensions.get('window').width;
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const MENTOR_BACKGROUND = [
+  {
+    id: 1,
+    name: `RANY PUNRONG`,
+    education: [
+      `2017: Studied one semester at School of Computer Science and Engineering, Nanyang Technological University, Singapore`,
+      `2016: Studied Professional Android Application Development,Cambodia-Korea Cooperation Center, Royal University of Phnom Penh`
+    ],
+    awards: [
+      `2019: Summer internship program at GIST, Korea`,
+      `2019: Summer internship program at GIST, Korea`,
+      `2017: One Semester Exchange Program, Temasek Foundation International`
+    ]
+  },
+  {
+    id: 2,
+    name: 'RANY PUNREACH',
+    education: [
+      `2017: Studied one semester at School of Computer Science and Engineering, Nanyang Technological University, Singapore`,
+      `2016: Studied Professional Android Application Development,Cambodia-Korea Cooperation Center, Royal University of Phnom Penh`
+    ],
+    awards: [
+      `2019: Summer internship program at GIST, Korea`,
+      `2017: One Semester Exchange Program, Temasek Foundation International`
+    ]
+  }
+]
 
-// Make a component
 export default class MentorProfileScreen extends React.Component {
 
   static navigationOptions = {
@@ -25,10 +50,44 @@ export default class MentorProfileScreen extends React.Component {
     heightBtn: 0
   };
 
+  constructor(){
+    super()
+    this.state = {
+      mentor: MENTOR_BACKGROUND.find((item) => {
+        return item.id === 1
+      })
+    }
+  }
+
   _onLayoutEvent = (event) => {
     this.state.heightBtn = event.nativeEvent.layout.height;
-    console.log(-this.state.heightBtn);
   };
+
+  renderEducation(){
+    return this.state.mentor.education.map((education, index) => {
+      return (
+        <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10, marginBottom: 10}}>
+            <Icon color='blue' name="graduation-cap" type="font-awesome" size={24} style={{marginRight: 10}}/>
+            <Text style={styles.textDetailContentStyle}>
+                {education}
+            </Text>
+        </View>
+      )
+    });
+  }
+
+  renderAwards(){
+    return this.state.mentor.awards.map((awards, index) => {
+      return (
+        <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10, marginBottom: 10}}>
+            <Icon color='blue' name="star" type="font-awesome" size={24} style={{marginRight: 10}}/>
+            <Text style={styles.textDetailContentStyle}>
+                {awards}
+            </Text>
+        </View>
+      )
+    });
+  }
 
   render() {
     const navigation = this.props.navigation;
@@ -42,7 +101,7 @@ export default class MentorProfileScreen extends React.Component {
             containerStyle = {styles.cardImageContainerStyle}>
               <Image
                   source={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg'}}
-                  style={{width: deviceWidth, height: 200, resizeMode : 'stretch'}}
+                  style={{width: DEVICE_WIDTH, height: 200, resizeMode : 'stretch'}}
                   PlaceholderContent={<ActivityIndicator/>}/>
           </Card>
 
@@ -50,82 +109,30 @@ export default class MentorProfileScreen extends React.Component {
               containerStyle = {styles.cardContainerStyle}
               wrapperStyle={{flex: 1}}>
                     
-                <View style={{alignItems: 'center', }}>
-                        <Text h2 style={{fontSize: 28, textAlign: 'center', fontWeight: 'bold'}}>Rany Punreach</Text>
+              <View style={{alignItems: 'center', }}>
+                <Text h2 style={{fontSize: 20, textAlign: 'center', fontWeight: 'bold'}}>{this.state.mentor.name}</Text>
                         
-                        <TouchableOpacity disabled={true}>
-                                <Text style={styles.textStyle}>Fee: 30$</Text>
-                        </TouchableOpacity>
-                        <Text style={{fontWeight: 'bold', paddingBottom: 5, fontSize: 12}}>Schedule: Saturday and Sunday</Text>
-                        <Text style={{fontSize: 12}}><Icon name='map-pin' type='font-awesome'/> Appointments: 15</Text>
-                        
-                        <TouchableOpacity disabled={true} style={{width:'100%'}}>
-                                <Text style={styles.textStyle}>Education</Text>
-                        </TouchableOpacity>
+                <TouchableOpacity disabled={true} style={{width:'100%'}}>
+                    <Text style={styles.textHeaderStyle}>Education</Text>
+                </TouchableOpacity>
 
-                      <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10, marginBottom: 10}}>
-                            <Icon color='blue' name="graduation-cap" type="font-awesome" size={24} style={{marginRight: 10}}/>
-                            <Text style={{flexDirection: 'row', alignSelf: 'flex-start', flex: 1, flexWrap: 'wrap', fontSize: 12}}>
-                                  2017: Studied 
-                                    <Text style={{fontWeight: 'bold'}}> one semester at School of Computer Science and
-                                                                      Engineering, Nanyang Technological University, Singapore
-                                    </Text>
-                            </Text>
-                      </View>
+                    {this.renderEducation()}
 
-                      <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10, marginBottom: 10}}>
-                            <Icon color='blue' name="graduation-cap" type="font-awesome" size={24} style={{marginRight: 10}}/>
-                            <Text style={{flexDirection: 'row', alignSelf: 'flex-start', flex: 1, flexWrap: 'wrap', fontSize: 12}}>
-                                  2016: Studied at 
-                                    <Text style={{fontWeight: 'bold'}}> Professional Android Application Development,
-                                                                      Cambodia-Korea Cooperation Center, Royal University of Phnom Penh
-                                    </Text>
-                        </Text>
-                      </View>
+                <TouchableOpacity disabled={true} style={{width:'100%'}}>
+                    <Text style={styles.textHeaderStyle}>Awards and Participation</Text>
+                </TouchableOpacity>
 
-                      <TouchableOpacity disabled={true} style={{width:'100%'}}>
-                                <Text style={styles.textStyle}>Awards and Participation</Text>
-                        </TouchableOpacity>
+                    {this.renderAwards()}
 
-                      <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10}}>
-                            <Icon color='blue' name="star" type="font-awesome" size={24} style={{marginRight: 10}}/>
-                            <Text style={{flexDirection: 'row', alignSelf: 'flex-start', flex: 1, flexWrap: 'wrap', fontSize: 12}}>
-                                  2017: 
-                                    <Text style={{fontWeight: 'bold'}}> One Semester Exchange Program, Temasek</Text>
-                            </Text>
-                      </View>
-
-                      <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10}}>
-                            <Icon color='blue' name="star" type="font-awesome" size={24} style={{marginRight: 10}}/>
-                            <Text style={{flexDirection: 'row', alignSelf: 'flex-start', flex: 1, flexWrap: 'wrap', fontSize: 12}}>
-                                  2017: 
-                                    <Text style={{fontWeight: 'bold'}}> One Semester Exchange Program, Temasek</Text>
-                            </Text>
-                      </View>
-
-                      <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10}}>
-                            <Icon color='blue' name="star" type="font-awesome" size={24} style={{marginRight: 10}}/>
-                            <Text style={{flexDirection: 'row', alignSelf: 'flex-start', flex: 1, flexWrap: 'wrap', fontSize: 12}}>
-                                  2017: 
-                                    <Text style={{fontWeight: 'bold'}}> One Semester Exchange Program, Temasek</Text>
-                            </Text>
-                      </View>
-
-                      <Button
+                <Button
                     onLayout={this._onLayoutEvent}
                     title="Subscribe"
                     onPress={() => navigation.navigate('SubscribeFormScreen')}
-                    style={{
-                      alignSelf: 'center',
-                      alignContent: 'center',
-                      marginLeft: 10,
-                      marginRight: 10,
-                      marginTop: 10,
-                      }}
-                    buttonStyle={{backgroundColor: '#ff2b55', borderRadius: 10, width: deviceWidth*0.8}}/>
-                </View>
-               </Card>
-        </ScrollView>
+                    style={styles.btnSubscriptionPositionStyle}
+                    buttonStyle={styles.btnSubscriptionStyle}/>
+            </View>
+        </Card>
+    </ScrollView>
     );
   }
 };
@@ -144,7 +151,7 @@ const styles = {
     alignItems: 'center',
     shadowColor: 'rgba(0,0,0,0)',
     shadowOpacity: 0,
-    width: deviceWidth,
+    width: DEVICE_WIDTH,
     shadowRadius: 0
   },
 
@@ -155,7 +162,7 @@ const styles = {
     marginLeft:10,
     marginRight: 10,
     backgroundColor: '#fff', 
-    width: deviceWidth*0.9
+    width: DEVICE_WIDTH*0.9
   },
 
   contentStyle: {
@@ -163,7 +170,7 @@ const styles = {
     borderColor: 'rgba(0,0,0,0.5)', 
     margin:10,
     backgroundColor: '#fff', 
-    width: deviceWidth*0.9
+    width: DEVICE_WIDTH*0.9
   },
   ratingStyle: {
     backgroundColor: '#428bca',
@@ -180,7 +187,7 @@ const styles = {
     alignItems: 'center'
   },
 
-  textStyle: {
+  textHeaderStyle: {
     color: "rgba(0,122,255,1)",
     borderWidth: 1,
     fontSize: 16,
@@ -191,8 +198,27 @@ const styles = {
     marginTop: 10,
     borderColor: "rgba(0,122,255,1)",
     textAlign: "center"
+  },
+
+  textDetailContentStyle : {
+    flexDirection: 'row', 
+    alignSelf: 'flex-start', 
+    flex: 1, 
+    flexWrap: 'wrap', 
+    fontSize: 12
+  },
+
+  btnSubscriptionPositionStyle: {
+    alignSelf: 'center',
+    alignContent: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10
+  },
+
+  btnSubscriptionStyle: {
+    backgroundColor: '#ff2b55', 
+    borderRadius: 10, 
+    width: DEVICE_WIDTH*0.8
   }
 };
-
-// Make the component available to other parts of the app
-// export default MentorProfileScreen;

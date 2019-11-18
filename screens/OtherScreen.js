@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, View, Text,ScrollView, StyleSheet, Dimensions } from 'react-native';
-import { Card, Icon, ListItem, Image, Avatar } from 'react-native-elements';
+import { TouchableOpacity, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { Card, ListItem, Avatar } from 'react-native-elements';
 
-const deviceWidth = Dimensions.get('window').width;
+const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const CONTENT = [
         {
@@ -81,7 +81,7 @@ export default class SettingsScreen extends React.Component {
       borderColor: 'rgba(0,0,0,0.5)',
       alignContent: 'center',
       backgroundColor: '#fff', 
-      width: 0.95*deviceWidth,
+      width: 0.95*DEVICE_WIDTH,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.5,

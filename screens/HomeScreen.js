@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, Dimensions, View, TouchableOpacity } from 'react-native';
-import { Card, ButtonGroup, Icon } from 'react-native-elements';
+import { StyleSheet, ScrollView, Dimensions, View, TouchableOpacity } from 'react-native';
+import { ButtonGroup } from 'react-native-elements';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import ProgramCard from '../components/ProgramCard';
   
-const DATA = [
+const PROGRAM_DATA = [
         { 
           id: 1, 
           program: 'One semester exchange', 
@@ -134,8 +134,7 @@ const DATA = [
           imageURI: 'https://images.unsplash.com/photo-1535486509975-18366f9825df?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ea59f63a657824d02872bb907fe85e76&auto=format&fit=crop&w=500&q=60' 
         }
   ];
-const programType = ['exchange', 'scholarship', 'competition']
-const deviceWidth = Dimensions.get('window').width;
+const PROGRAM_TYPE = ['exchange', 'scholarship', 'competition']
  
 export default class HomeView extends React.Component {
   //Header
@@ -155,23 +154,23 @@ export default class HomeView extends React.Component {
     var firebaseConfig = {     
       apiKey : " AIzaSyAE_EoZBl5Rd_iEWfrDdOU-kIYzS-Rw6SI " ,    
       authDomain : "serschborng-830c3.firebaseapp.com" , 
-    databaseURL : "https://serschborng-830c3.firebaseio.com" ,     
-    projectId : "serschborng-830c3" ,     
-    storageBucket : "serschborng-830c3.appspot.com" ,     
-    messagingSenderId : "793654958178 " ,     
-    appId : " 1: 793654958178: web: 7c04a556def9d7cbda593b " ,     
-    measurementId : " G-PPJYPGZQCG " }; 
-    
-    firebase.initializeApp(firebaseConfig);
+      databaseURL : "https://serschborng-830c3.firebaseio.com" ,     
+      projectId : "serschborng-830c3" ,     
+      storageBucket : "serschborng-830c3.appspot.com" ,     
+      messagingSenderId : "793654958178 " ,     
+      appId : " 1: 793654958178: web: 7c04a556def9d7cbda593b " ,     
+      measurementId : " G-PPJYPGZQCG " }; 
+      
+      firebase.initializeApp(firebaseConfig);
 
-    const firestore = firebase.firestore();
-    firestore.collection("Program")
-    .where("country", "==", "Singapore")
-    .get()
-    .then(querySnapshot => {
-      const data = querySnapshot.docs.map(doc => doc.data());
-      console.log(data); // array of cities objects
-    });
+      const firestore = firebase.firestore();
+      firestore.collection("Program")
+      .where("country", "==", "Singapore")
+      .get()
+      .then(querySnapshot => {
+        const data = querySnapshot.docs.map(doc => doc.data());
+        console.log(data); // array of cities objects
+      });
     // firestore.collection('Program').get()
     // .then(snapshot => {
     //   snapshot
@@ -188,8 +187,8 @@ export default class HomeView extends React.Component {
     this.state = {
       selectedIndex: 0, //Button Group index
       //Default Display: Exchange Program
-      programList : DATA.filter((item) =>{
-          return item.type === programType[0];
+      programList : PROGRAM_DATA.filter((item) =>{
+          return item.type === PROGRAM_TYPE[0];
         })
     }
 
@@ -203,20 +202,20 @@ export default class HomeView extends React.Component {
 
       switch(selectedIndex){
         case 0:
-          this.state.programList = DATA.filter((item) =>{
-            return item.type === programType[0];
+          this.state.programList = PROGRAM_DATA.filter((item) =>{
+            return item.type === PROGRAM_TYPE[0];
           })
           break;
 
         case 1:
-          this.state.programList = DATA.filter((item) =>{
-            return item.type === programType[1];
+          this.state.programList = PROGRAM_DATA.filter((item) =>{
+            return item.type === PROGRAM_TYPE[1];
           })
           break;
 
         case 2:
-            this.state.programList = DATA.filter((item) =>{
-              return item.type === programType[2];
+            this.state.programList = PROGRAM_DATA.filter((item) =>{
+              return item.type === PROGRAM_TYPE[2];
             })
           break;
       }

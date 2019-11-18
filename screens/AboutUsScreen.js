@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, ScrollView, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Card, Image} from 'react-native-elements';
 
-const deviceWidth = Dimensions.get('window').width;
+const DEVICE_WIDTH = Dimensions.get('window').width;
 
 export default class AboutUsScreen extends React.Component {
 
@@ -23,20 +23,21 @@ export default class AboutUsScreen extends React.Component {
         <ScrollView 
             contentContainerStyle = {styles.scrollViewStyle}
             showsVerticalScrollIndicator={false}>
-        <View>
-        <Card
-            containerStyle = {styles.cardImageContainerStyle}>
+          <View>
+            <Card
+              containerStyle = {styles.cardImageContainerStyle}>
               <Image
                   source= {{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7hOQ3Q-0my6MQG0epjxSEly2BAh8Xhni0KU9_6PvKGdEUqm_A' }} 
-                  style = {{height: deviceWidth/3, width: deviceWidth/3, margin: 5 }}
+                  style = {{height: DEVICE_WIDTH/3, width: DEVICE_WIDTH/3, margin: 5 }}
                   PlaceholderContent={<ActivityIndicator/>}/>
-          </Card>
-            
+            </Card>
+              
             <Card
               containerStyle = {styles.cardContainerStyle}
               wrapperStyle={{flex: 1}}>
 
-                  <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>Sers Chborng</Text>
+              <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>Sers Chborng</Text>
+
               <TouchableOpacity disabled={true} style={{width:'100%'}}>
                   <Text style={styles.textBorder}>Our Team</Text>
               </TouchableOpacity>
@@ -56,12 +57,12 @@ export default class AboutUsScreen extends React.Component {
               <Text style={styles.textDetail}>haha</Text>
 
               <TouchableOpacity disabled={true} style={{width:'100%'}}>
-                  <Text style={styles.textBorder}>Our Mission</Text>
+                  <Text style={styles.textBorder}>Our Contact</Text>
               </TouchableOpacity>
 
               <Text style={styles.textDetail}>haha</Text>
             </Card>
-        </View>
+          </View>
         </ScrollView>
       );
     }
@@ -75,7 +76,7 @@ export default class AboutUsScreen extends React.Component {
       alignItems: 'center',
       padding: 0,
       shadowOpacity: 0,
-      width: deviceWidth*0.9,
+      width: DEVICE_WIDTH*0.9,
       shadowRadius: 0
     },
 
@@ -83,7 +84,7 @@ export default class AboutUsScreen extends React.Component {
       borderRadius: 20, 
       borderColor: 'rgba(0,0,0,0.5)', 
       backgroundColor: '#fff', 
-      width: deviceWidth*0.9
+      width: DEVICE_WIDTH*0.9
     },
 
    textBorder: {

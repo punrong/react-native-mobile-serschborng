@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import Card from '../components/Card';
+import MentorCard from '../components/MentorCard';
 
 export default class MenteeList extends React.Component {
 
@@ -51,7 +51,7 @@ export default class MenteeList extends React.Component {
                         const result = [];
                         mentees.forEach(
                             (mentee, i) => {
-                                result.push(<Card key={mentee.id} mentee={mentee} navigation={navigation} />);
+                                result.push(<MentorCard key={mentee.id} mentee={mentee} navigation={navigation} />);
                             }
                         );
                         return result;

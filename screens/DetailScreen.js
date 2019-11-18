@@ -3,8 +3,8 @@ import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Dimensions, Image
 import { Card, ButtonGroup} from 'react-native-elements';
 import MentorScreen from './MentorScreen'
 
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const DETAIL = [
   {
@@ -132,7 +132,7 @@ export default class HomeView extends React.Component {
             containerStyle = {styles.cardImageContainerStyle}>
               <Image 
                   source= {{ uri: this.state.programDetail.imageURI }} 
-                  style = {{height: deviceHeight/3, width: deviceWidth*0.9, margin: 5, alignSelf: 'stretch' }}
+                  style = {{height: DEVICE_HEIGHT/3, width: DEVICE_WIDTH*0.9, margin: 5, alignSelf: 'stretch' }}
                   resizeMode={'contain'}
                   PlaceholderContent={<ActivityIndicator/>}/>
           </Card>
@@ -141,7 +141,8 @@ export default class HomeView extends React.Component {
               containerStyle = {styles.cardContainerStyle}
               wrapperStyle={{flex: 1}}>
                   
-                  <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>{this.state.programDetail.name}</Text>
+              <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>{this.state.programDetail.name}</Text>
+              
               <TouchableOpacity disabled={true} style={{width:'100%'}}>
                   <Text style={styles.textBorder}>About the Program</Text>
               </TouchableOpacity>
@@ -193,7 +194,7 @@ export default class HomeView extends React.Component {
         margin: 5,
         padding: 0,
         shadowOpacity: 0,
-        width: deviceWidth*0.9,
+        width: DEVICE_WIDTH*0.9,
         shadowRadius: 0
       },
 
@@ -201,7 +202,7 @@ export default class HomeView extends React.Component {
         borderRadius: 20, 
         borderColor: 'rgba(0,0,0,0.5)', 
         backgroundColor: '#fff', 
-        width: deviceWidth*0.9
+        width: DEVICE_WIDTH*0.9
       },
 
       buttonGroupStyle: {
