@@ -15,21 +15,27 @@ const defaultStyleConfig = {
 const MentorCard = (props) => {
     return (
         <TouchableOpacity
-            onPress={() => props.navigation.navigate('MentorProfileScreen')}
+            onPress={() => props.navigation.navigate('MentorProfileScreen',
+                            {  
+                                navigation: props.navigation,
+                                mentorProfile: props.mentor,
+                                programName: props.mentor.programName
+                            }
+                        )}
             style={styles.boxStyle}>
 
             <Image 
                 style={[styles.imageStyle, styles.createMarginBottom]} 
-                source={{ uri: props.mentee.source }} />
+                source={{ uri: props.mentor.imageURI }} />
 
             <Text style={[
                 styles.textStyle,
                 styles.createMarginBottom,
                 {
-                    fontSize: props.mentee.name.length > defaultStyleConfig.numOfNameToShrink ? defaultStyleConfig.longName : defaultStyleConfig.shortName
+                    fontSize: props.mentor.name.length > defaultStyleConfig.numOfNameToShrink ? defaultStyleConfig.longName : defaultStyleConfig.shortName
                 }
             ]}>
-                {props.mentee.name}
+                {props.mentor.name}
             </Text>
 
             <View style={[styles.rowifyStyle, styles.createMarginBottom]}>
@@ -38,12 +44,18 @@ const MentorCard = (props) => {
                         size={20}
                         style={styles.iconStyle}
                     />
-                <Text>Appointments: {props.mentee.appointments}</Text>
+                <Text>Appointments: {props.mentor.appointment}</Text>
             </View>
 
             <Button
                     title="View Profile"
-                    onPress={() => props.navigation.navigate('MentorProfileScreen')}
+                    onPress={() => props.navigation.navigate('MentorProfileScreen',
+                            {  
+                                navigation: props.navigation,
+                                mentorProfile: props.mentor,
+                                programName: props.mentor.programName
+                            }
+                    )}
                     style={{
                       alignSelf: 'center',
                       alignContent: 'center',

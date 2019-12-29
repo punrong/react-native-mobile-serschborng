@@ -1,59 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Dimensions, Image, ActivityIndicator } from 'react-native';
 import { Card, ButtonGroup} from 'react-native-elements';
-import MentorScreen from './MentorScreen'
+import MentorScreen from './MentorScreen';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const DETAIL = [
-  {
-    id: 1,
-    imageURI: 
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK3BEIUZOz7KXxS-sqxBFxwWQjxMlaM3A9V3Ub9gMpVKEPZJRB',
-    name:
-          "TF Int'l LEaRN Program at NTU",
-    About:
-          `The TF Int'l LEaRN Program @ NTU is funded by Temasek Foundation. Thegoal of the scholarship programme is to build bridges among student leaders in Asia, with an aim to achieve the following:
-          1.Develop aglobal mindset 
-          2.Form a sustained network 
-          3.Work together towards regional cooperation and development 
-          4.Develop leadership skills andsocail awareness`,
-    Sponsorship:
-          `Selected students will receive approximately $6,500 to cover their living expenses in Singapore during the exchange program.`,
-    Eligibility:
-          `Applicants must fullfill the following requirements: 
-          1.Be nominated by RUPP or RULE 
-          2.Be undergraduate students who completed at least one year of study at RUPP or RULE 
-          3.Be in the top 10% of their cohort in acedemic performance 
-          4.Be fluent in English 
-          5.Be interested in community sesrivce and have served in leadership position`
-  },
-  {
-    id: 2,
-    imageURI: 
-          'https://www.share-asean.eu/sites/default/files/sample-image-3_0.jpg',
-    name:
-          "SHARE SCHOLARSHIP",
-    About:
-          `SHARE SCHOLARSHIP is funded by Temasek Foundation. Thegoal of the scholarship programme is to build bridges among student leaders in Asia, with an aim to achieve the following:
-          1.Develop aglobal mindset 
-          2.Form a sustained network 
-          3.Work together towards regional cooperation and development 
-          4.Develop leadership skills andsocail awareness`,
-    Sponsorship:
-          `Selected students will receive approximately $6,500 to cover their living expenses in Singapore during the exchange program.`,
-    Eligibility:
-          `Applicants must fullfill the following requirements: 
-          1.Be nominated by RUPP or RULE 
-          2.Be undergraduate students who completed at least one year of study at RUPP or RULE 
-          3.Be in the top 10% of their cohort in acedemic performance 
-          4.Be fluent in English 
-          5.Be interested in community sesrivce and have served in leadership position`
-  }
-]
-
-export default class HomeView extends React.Component {
+export default class DetailScreen extends React.Component {
   static navigationOptions = {
     title: 'Detail',
     headerStyle:{
@@ -66,23 +19,18 @@ export default class HomeView extends React.Component {
     },
   }; 
 
-  constructor () {
-    super()
-    // const {current_exchange, navigation} = this.props
+  constructor (props) {
+    super(props)
+    var selectedProgram = props.navigation.state.params.selectedProgram;
     this.state = {
       selectedIndex: 0,
-      value: {},
       programDetail : {}
     }
 
-    console.log("HI" + this.state.value.id)
-
-    this.state.programDetail =   DETAIL.find((item) =>{
-      return item.id === 1
-    })
+    this.state.programDetail =   selectedProgram
     this.updateIndex = this.updateIndex.bind(this)
   }
-      
+
   updateIndex (selectedIndex) {
     this.setState({selectedIndex});
   }
@@ -127,46 +75,47 @@ export default class HomeView extends React.Component {
   renderContent() {
     if(this.state.selectedIndex == 0)
       return (
-        <View>
+        <ScrollView>
           <Card
             containerStyle = {styles.cardImageContainerStyle}>
               <Image 
                   source= {{ uri: this.state.programDetail.imageURI }} 
-                  style = {{height: DEVICE_HEIGHT/3, width: DEVICE_WIDTH*0.9, margin: 5, alignSelf: 'stretch' }}
+                  style = {{height: DEVICE_HEIGHT/3, width: DEVICE_WIDTH*0.8, margin: 5, alignSelf: 'center' }}
                   resizeMode={'contain'}
                   PlaceholderContent={<ActivityIndicator/>}/>
-          </Card>
-            
-            <Card
-              containerStyle = {styles.cardContainerStyle}
-              wrapperStyle={{flex: 1}}>
-                  
-              <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>{this.state.programDetail.name}</Text>
-              
-              <TouchableOpacity disabled={true} style={{width:'100%'}}>
-                  <Text style={styles.textBorder}>About the Program</Text>
-              </TouchableOpacity>
+              <Card
+                containerStyle = {styles.cardContainerStyle}
+                wrapperStyle={{flex: 1}}>
+                    
+                <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>{this.state.programDetail.program}</Text>
+                
+                <TouchableOpacity disabled={true} style={{width:'100%'}}>
+                    <Text style={styles.textBorder}>About the Program</Text>
+                </TouchableOpacity>
 
-              <Text style={styles.textDetail}>{this.state.programDetail.About}</Text>
+                <Text style={styles.textDetail}>{this.state.programDetail.about}</Text>
 
-              <TouchableOpacity disabled={true} style={{width:'100%'}}>
-                  <Text style={styles.textBorder}>Sponsorship</Text>
-              </TouchableOpacity>
+                <TouchableOpacity disabled={true} style={{width:'100%'}}>
+                    <Text style={styles.textBorder}>Sponsorship</Text>
+                </TouchableOpacity>
 
-              <Text style={styles.textDetail}>{this.state.programDetail.Sponsorship}</Text>
+                <Text style={styles.textDetail}>{this.state.programDetail.sponsor}</Text>
 
-              <TouchableOpacity disabled={true} style={{width:'100%'}}>
-                  <Text style={styles.textBorder}>Eligibility</Text>
-              </TouchableOpacity>
+                <TouchableOpacity disabled={true} style={{width:'100%'}}>
+                    <Text style={styles.textBorder}>Eligibility</Text>
+                </TouchableOpacity>
 
-              <Text style={styles.textDetail}>{this.state.programDetail.Eligibility}</Text>
+                <Text style={styles.textDetail}>{this.state.programDetail.eligibility}</Text>
             </Card>
-        </View>
+          </Card>
+        </ScrollView>
       );
-    else 
+    else {
+      console.log('detail props',this.props)
       return (
         <MentorScreen navigation={this.props.navigation}/>
       )
+    }
   }
 
   render () {

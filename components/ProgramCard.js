@@ -3,15 +3,16 @@ import { StyleSheet, Text, Dimensions, View, TouchableOpacity } from 'react-nati
 import { Card, Icon } from 'react-native-elements';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const ProgramCard = (props) => {
-    if(props.programList.program.length < 10)
-      PROGRAM_TEXT_SIZE = 14;
+    if(props.selectedProgram.program.length < 10)
+      PROGRAM_TEXT_SIZE = 16;
     else 
-      PROGRAM_TEXT_SIZE = 12;
+      PROGRAM_TEXT_SIZE = 14;
 
     //Select appropriate text size for country's name
-    if(props.programList.country.length < 10)
+    if(props.selectedProgram.country.length < 10)
       COUNTRY_TEXT_SIZE = 16;
     else 
       COUNTRY_TEXT_SIZE = 14;
@@ -19,33 +20,36 @@ const ProgramCard = (props) => {
       
     return (
       <TouchableOpacity 
-              onPress={() => props.navigation.navigate(
-                              'DetailScreen', 
+              onPress={() => 
+                props.navigation.navigate('DetailScreen', 
                             {
-                              current_exchange: props.programList.id,
-                              navigation: props.navigation
+                              navigation: props.navigation,
+                              selectedProgram: props.selectedProgram
                             }
                       )}
               style={{flexWrap:'wrap', flex: 1, flexDirection: 'row'}}>
-      
         <Card
             containerStyle = {styles.cardContainerStyle}
-            key={props.programList.id}
-            image={{ uri: props.programList.imageURI }}>
+            key={props.selectedProgram.id}
+            image={{ uri: props.selectedProgram.imageURI }}>
             <Text 
                 style={{ marginBottom: 10 , textAlign: 'center', fontSize: PROGRAM_TEXT_SIZE, fontWeight: 'bold'}}>
-                {props.programList.program}
+                {props.selectedProgram.program}
+            </Text>
+            <Text 
+                style={{ marginBottom: 10 , textAlign: 'center', fontSize: PROGRAM_TEXT_SIZE, fontWeight: 'bold'}}>
+                {props.selectedProgram.degree}
             </Text>
             <Text 
                 style={{ marginBottom: 10 , textAlign: 'center', fontSize: COUNTRY_TEXT_SIZE, fontWeight: 'bold'}}>
-                {props.programList.country}
+                {props.selectedProgram.country}
             </Text>
             <View 
                 style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <Icon
                     name='person'
                     color='#517fa4'/>
-                <Text> Mentors: {props.programList.mentor}</Text>
+                <Text> Mentors: {props.selectedProgram.mentor}</Text>
             </View>
         </Card>
     </TouchableOpacity>
@@ -66,6 +70,7 @@ const styles = StyleSheet.create({
       marginBottom:5,
       backgroundColor: '#fff', 
       width: 0.9*DEVICE_WIDTH/2,
+      height: 'auto',
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.8,

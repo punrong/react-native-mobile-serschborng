@@ -36,8 +36,6 @@ export default class AboutUsScreen extends React.Component {
               containerStyle = {styles.cardContainerStyle}
               wrapperStyle={{flex: 1}}>
 
-              <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>Sers Chborng</Text>
-
               <TouchableOpacity disabled={true} style={{width:'100%'}}>
                   <Text style={styles.textBorder}>Our Team</Text>
               </TouchableOpacity>

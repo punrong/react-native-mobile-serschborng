@@ -1,36 +1,10 @@
 import React from 'react';
-import {ActivityIndicator, Text, View, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, Text, View, ScrollView, Dimensions, TouchableOpacity, Platform} from 'react-native';
 import {Button, Image, Card} from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { db } from '../Firebase_Config/db_config';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const MENTOR_BACKGROUND = [
-  {
-    id: 1,
-    name: `RANY PUNRONG`,
-    education: [
-      `2017: Studied one semester at School of Computer Science and Engineering, Nanyang Technological University, Singapore`,
-      `2016: Studied Professional Android Application Development,Cambodia-Korea Cooperation Center, Royal University of Phnom Penh`
-    ],
-    awards: [
-      `2019: Summer internship program at GIST, Korea`,
-      `2019: Summer internship program at GIST, Korea`,
-      `2017: One Semester Exchange Program, Temasek Foundation International`
-    ]
-  },
-  {
-    id: 2,
-    name: 'RANY PUNREACH',
-    education: [
-      `2017: Studied one semester at School of Computer Science and Engineering, Nanyang Technological University, Singapore`,
-      `2016: Studied Professional Android Application Development,Cambodia-Korea Cooperation Center, Royal University of Phnom Penh`
-    ],
-    awards: [
-      `2019: Summer internship program at GIST, Korea`,
-      `2017: One Semester Exchange Program, Temasek Foundation International`
-    ]
-  }
-]
 
 export default class MentorProfileScreen extends React.Component {
 
@@ -46,22 +20,15 @@ export default class MentorProfileScreen extends React.Component {
     },
   };
 
-  state = {
-    heightBtn: 0
-  };
-
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
+    var mentor = props.navigation.state.params.mentorProfile
+    var programName = props.navigation.state.params.programName
     this.state = {
-      mentor: MENTOR_BACKGROUND.find((item) => {
-        return item.id === 1
-      })
+      programName: programName,
+      mentor: mentor
     }
   }
-
-  _onLayoutEvent = (event) => {
-    this.state.heightBtn = event.nativeEvent.layout.height;
-  };
 
   renderEducation(){
     return this.state.mentor.education.map((education, index) => {
@@ -77,7 +44,7 @@ export default class MentorProfileScreen extends React.Component {
   }
 
   renderAwards(){
-    return this.state.mentor.awards.map((awards, index) => {
+    return this.state.mentor.award.map((awards, index) => {
       return (
         <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10, marginBottom: 10}}>
             <Icon color='blue' name="star" type="font-awesome" size={24} style={{marginRight: 10}}/>
@@ -89,6 +56,34 @@ export default class MentorProfileScreen extends React.Component {
     });
   }
 
+  renderProfileImageIOS(){
+    if(Platform.OS === 'ios')
+    return(
+      <View style={styles.cardImageContainerStyle}>
+        <Image
+            source={{uri: this.state.mentor.imageURI}}
+            style={styles.imageStyle}
+            PlaceholderContent={<ActivityIndicator/>}/>
+      </View>
+    )
+  }
+
+  renderProfileImageAndroid(){
+    if(Platform.OS === 'android')
+    return(
+      <View style={{    
+      alignSelf: 'center',
+      alignItems: 'center',
+      marginTop: 10,
+      width: DEVICE_WIDTH,}}>
+        <Image
+            source={{uri: this.state.mentor.imageURI}}
+            style={styles.imageStyle}
+            PlaceholderContent={<ActivityIndicator/>}/>
+      </View>
+    )
+  }
+
   render() {
     const navigation = this.props.navigation;
 
@@ -96,21 +91,15 @@ export default class MentorProfileScreen extends React.Component {
       <ScrollView 
           contentContainerStyle = {styles.scrollViewStyle}
           showsVerticalScrollIndicator={false}>
-         
-          <Card
-            containerStyle = {styles.cardImageContainerStyle}>
-              <Image
-                  source={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg'}}
-                  style={{width: DEVICE_WIDTH, height: 200, resizeMode : 'stretch'}}
-                  PlaceholderContent={<ActivityIndicator/>}/>
-          </Card>
+
+{this.renderProfileImageAndroid()}
 
           <Card
               containerStyle = {styles.cardContainerStyle}
               wrapperStyle={{flex: 1}}>
-                    
-              <View style={{alignItems: 'center', }}>
-                <Text h2 style={{fontSize: 20, textAlign: 'center', fontWeight: 'bold'}}>{this.state.mentor.name}</Text>
+
+              <View style={styles.mentorContentStyle}>
+                <Text h2 style={{fontSize: 20, textAlign: 'center', fontWeight: 'bold', marginTop: 10}}>{this.state.mentor.name}</Text>
                         
                 <TouchableOpacity disabled={true} style={{width:'100%'}}>
                     <Text style={styles.textHeaderStyle}>Education</Text>
@@ -124,14 +113,24 @@ export default class MentorProfileScreen extends React.Component {
 
                     {this.renderAwards()}
 
-                <Button
-                    onLayout={this._onLayoutEvent}
-                    title="Subscribe"
-                    onPress={() => navigation.navigate('SubscribeFormScreen')}
-                    style={styles.btnSubscriptionPositionStyle}
-                    buttonStyle={styles.btnSubscriptionStyle}/>
             </View>
         </Card>
+        
+                    {this.renderProfileImageIOS()}
+
+            <Button
+                    title="Subscribe"
+                    onPress={() => navigation.navigate('SubscribeFormScreen',
+                            {
+                              navigation: this.props.navigation,
+                              mentorName: this.state.mentor.name,
+                              mentorID: this.state.mentor.id,
+                              programName: this.state.programName
+                            })
+                          }
+                    style={styles.btnSubscriptionPositionStyle}
+                    buttonStyle={styles.btnSubscriptionStyle}/>
+
     </ScrollView>
     );
   }
@@ -140,25 +139,24 @@ export default class MentorProfileScreen extends React.Component {
 const styles = {
 
   cardImageContainerStyle:{
-    borderColor: 'rgba(0,0,0,0)',
     position: "absolute",
-    top: 0,
-    right: 0,
+    alignSelf: 'center',
+    top: 10,
     bottom: 0,
     left: 0,
-    margin: 0,
-    padding: 0,
+    right: 0,
     alignItems: 'center',
-    shadowColor: 'rgba(0,0,0,0)',
-    shadowOpacity: 0,
     width: DEVICE_WIDTH,
-    shadowRadius: 0
   },
 
   cardContainerStyle: {
     borderRadius: 20, 
     borderColor: 'rgba(0,0,0,0.5)', 
-    marginTop: 150,
+    ...Platform.select({
+      ios:{
+        marginTop: (DEVICE_WIDTH/2.5)/2,
+      }
+    }),
     marginLeft:10,
     marginRight: 10,
     backgroundColor: '#fff', 
@@ -181,10 +179,36 @@ const styles = {
     paddingHorizontal: 5,
   },
 
+  imageStyle: {
+    width: DEVICE_WIDTH/2.5, 
+    height: DEVICE_WIDTH/2.5, 
+    borderRadius: (DEVICE_WIDTH/2.5)/2, 
+    resizeMode : 'cover',
+    borderColor: 'rgba(0,0,0,0.1)',
+    borderWidth: 2,
+    overflow: 'hidden',
+    ...Platform.select({
+      ios:{
+        position: "absolute",
+        alignSelf: 'center'
+      }
+    }),
+  },
+
   scrollViewStyle: {
     flexGrow: 1, 
-    paddingBottom: 10,
+    paddingBottom: 35,
     alignItems: 'center'
+  },
+
+  mentorContentStyle:{
+    flex: 1, 
+    alignItems: 'center',
+    ...Platform.select({
+      ios:{
+        marginTop: (DEVICE_WIDTH/2.5)/2
+      }
+    }),            
   },
 
   textHeaderStyle: {
@@ -205,20 +229,31 @@ const styles = {
     alignSelf: 'flex-start', 
     flex: 1, 
     flexWrap: 'wrap', 
-    fontSize: 12
+    fontSize: 14
   },
 
   btnSubscriptionPositionStyle: {
-    alignSelf: 'center',
+    ...Platform.select({
+      ios:{
+        position: 'absolute',
+        bottom: -25,
+        alignSelf: 'center',
+        marginTop: 10,
+      }
+    }), 
     alignContent: 'center',
     marginLeft: 10,
-    marginRight: 10,
-    marginTop: 10
+    marginRight: 10
   },
 
   btnSubscriptionStyle: {
     backgroundColor: '#ff2b55', 
     borderRadius: 10, 
-    width: DEVICE_WIDTH*0.8
+    width: DEVICE_WIDTH*0.8,
+    ...Platform.select({
+      android:{
+        marginTop: 10,
+      }
+    }), 
   }
 };

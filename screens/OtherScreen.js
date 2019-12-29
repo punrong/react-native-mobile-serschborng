@@ -6,26 +6,26 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const CONTENT = [
         {
-          id: 1,
+          id: `O001`,
           content: 'ABOUT US',
           imageURI: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7hOQ3Q-0my6MQG0epjxSEly2BAh8Xhni0KU9_6PvKGdEUqm_A',
           screen: 'AboutUsScreen'
         },
         {
-          id: 2,
+          id: `O002`,
           content: 'BECOME A MENTOR?',
           imageURI: 'https://content.thriveglobal.com/wp-content/uploads/2019/05/Top-7-qualities-of-the-best-mentors-in-a-business.png',
           screen: 'BecomeMentorScreen'
         },
         {
-          id: 3,
+          id: `O003`,
           content: 'FEEDBACK',
           imageURI: 'https://knowyourteam.com/blog/wp-content/uploads/2019/08/giving-feedback-behavior-change-1024x429.jpg',
           screen: 'FeedbackScreen'
         }
 ]
 
-export default class SettingsScreen extends React.Component {
+export default class OthersScreen extends React.Component {
 
     static navigationOptions = {
         title: 'Others',
