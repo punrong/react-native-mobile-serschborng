@@ -2,7 +2,6 @@ import React from 'react';
 import {ActivityIndicator, Text, View, ScrollView, Dimensions, TouchableOpacity, Platform} from 'react-native';
 import {Button, Image, Card} from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { db } from '../Firebase_Config/db_config';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 

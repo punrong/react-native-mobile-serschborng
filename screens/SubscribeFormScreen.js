@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, TextInput} from "react-native";
 import {Button, Input} from "react-native-elements";
+import { db } from '../Firebase_Config/db_config';
 
 export default class SubscribeFormScreen extends React.Component {
 
@@ -33,6 +34,29 @@ export default class SubscribeFormScreen extends React.Component {
     this.state.mentorID = mentorID
     this.state.mentorName = mentorName
     this.state.programName = programName
+  }
+
+  handleClick = () => {
+    mentorName = this.state.mentorName
+    programName = this.state.programName
+    firstName = this.state.firstName
+    lastName = this.state.lastName
+    phoneNumber = this.state.phoneNumber
+    email = this.state.email
+    if(firstName !=='' && lastName !=='' &&
+        phoneNumber !=='' && email !=='' &&
+        programName !=='' && mentorName !== ''){
+      db.ref('MenteeRegister/').push({
+        firstName,
+        lastName,
+        phoneNumber,
+        mentorName,
+        email,
+        programName
+      })
+      alert('We will contact you shortly! Thank you!')
+      this.props.navigation.goBack();
+    }
   }
 
   render() {
@@ -68,7 +92,7 @@ export default class SubscribeFormScreen extends React.Component {
               containerStyle={{marginBottom: 10}} 
               editable={false}/>
 
-          <Button title={'SUBMIT'}/>
+          <Button title={'SUBMIT'} onPress={this.handleClick.bind(this)}/>
         </View>
     );
   }

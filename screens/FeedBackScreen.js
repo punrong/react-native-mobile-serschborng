@@ -1,7 +1,8 @@
 import React from 'react';
 import { TextInput, View } from 'react-native';
 import {Button} from "react-native-elements";
-
+import { db } from '../Firebase_Config/db_config';
+import Dialog from "react-native-dialog";
 
 export default class FeedBackScreen extends React.Component {
 
@@ -21,7 +22,20 @@ export default class FeedBackScreen extends React.Component {
         super(props);
         this.state = {feedback: ''};
       }
+
+      handleClick = () => {
+      feedback = this.state.feedback
+      if(feedback !==''){
+        db.ref('Feedbacks/').push({
+          feedback
+        })
+        alert('Your Feedback is submitted! Thank you!')
+        this.props.navigation.goBack();
+      }
+    }
+
     render() {
+      // const {navigation} = this.props.navigation;
       return (
           <View style={{ flex: 1, alignContent: 'center', padding: 10 }}>
           <TextInput
@@ -38,7 +52,7 @@ export default class FeedBackScreen extends React.Component {
                 onChangeText={(feedback) => this.setState({feedback})}
                 value={this.state.feedback}
           />
-          <Button title={'SUBMIT'}/>
+          <Button title={'SUBMIT'} onPress={this.handleClick.bind(this)}/>
         </View>
       );
     }

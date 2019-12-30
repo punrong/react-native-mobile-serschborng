@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import {Button, Input} from "react-native-elements";
+import { db } from '../Firebase_Config/db_config';
 
 export default class BecomeMentorScreen extends React.Component {
 
@@ -25,6 +26,27 @@ export default class BecomeMentorScreen extends React.Component {
           email: '',
           programName: ''
         };
+      }
+
+      handleClick = () => {
+        firstName = this.state.firstName
+        lastName = this.state.lastName
+        phoneNumber = this.state.phoneNumber
+        email = this.state.email
+        programName = this.state.programName
+        if(firstName !=='' && lastName !=='' &&
+            phoneNumber !=='' && email !=='' &&
+            programName !==''){
+          db.ref('MentorRegister/').push({
+            firstName,
+            lastName,
+            phoneNumber,
+            email,
+            programName
+          })
+          alert('Your Information is submitted! Thank you!')
+          this.props.navigation.goBack();
+        }
       }
 
     render() {
@@ -56,7 +78,7 @@ export default class BecomeMentorScreen extends React.Component {
               onChangeText={(programName) => this.setState({programName})}
               value={this.state.programName}/>
 
-          <Button title={'SUBMIT'}/>
+            <Button title={'SUBMIT'} onPress={this.handleClick.bind(this)}/>
         </View>
       );
     }

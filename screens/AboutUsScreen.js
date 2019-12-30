@@ -1,9 +1,10 @@
 import React from 'react';
 import { Text, View, ScrollView, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Card, Image} from 'react-native-elements';
+import { db } from '../Firebase_Config/db_config';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-
+var ABOUTUS = {}
 export default class AboutUsScreen extends React.Component {
 
     static navigationOptions = {
@@ -18,6 +19,33 @@ export default class AboutUsScreen extends React.Component {
         },
       };
 
+      componentDidMount() {
+        let AboutUS = {};
+        ABOUTUS={}
+           let ref = db.ref('AboutUS/');
+           let message = ref.once('value', async (snapshot) => {
+            snapshot.forEach( await function(childSnapshot) {
+              AboutUS = {
+                value:  childSnapshot.val().value,
+                mission:  childSnapshot.val().mission,
+                vision:  childSnapshot.val().vision,
+                contact:  childSnapshot.val().contact,
+                imageURI: childSnapshot.val().imageURI
+              }
+              ABOUTUS= AboutUS;
+            })
+            this.setState({aboutUs: ABOUTUS});
+            console.log('state',this.state.aboutUs)
+          });
+      }
+
+      constructor(props){
+        super(props);
+        this.state={
+          aboutUs: []
+        }
+      }
+
     render() {
       return (
         <ScrollView 
@@ -27,7 +55,7 @@ export default class AboutUsScreen extends React.Component {
             <Card
               containerStyle = {styles.cardImageContainerStyle}>
               <Image
-                  source= {{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7hOQ3Q-0my6MQG0epjxSEly2BAh8Xhni0KU9_6PvKGdEUqm_A' }} 
+                  source= {{ uri: this.state.aboutUs.imageURI }} 
                   style = {{height: DEVICE_WIDTH/3, width: DEVICE_WIDTH/3, margin: 5 }}
                   PlaceholderContent={<ActivityIndicator/>}/>
             </Card>
@@ -37,28 +65,28 @@ export default class AboutUsScreen extends React.Component {
               wrapperStyle={{flex: 1}}>
 
               <TouchableOpacity disabled={true} style={{width:'100%'}}>
-                  <Text style={styles.textBorder}>Our Team</Text>
-              </TouchableOpacity>
-
-              <Text style={styles.textDetail}>ahah</Text>
-
-              <TouchableOpacity disabled={true} style={{width:'100%'}}>
                   <Text style={styles.textBorder}>Our Value</Text>
               </TouchableOpacity>
 
-              <Text style={styles.textDetail}>hah</Text>
+              <Text style={styles.textDetail}>{this.state.aboutUs.value}</Text>
+
+              <TouchableOpacity disabled={true} style={{width:'100%'}}>
+                  <Text style={styles.textBorder}>Our Mission</Text>
+              </TouchableOpacity>
+
+              <Text style={styles.textDetail}>{this.state.aboutUs.mission}</Text>
 
               <TouchableOpacity disabled={true} style={{width:'100%'}}>
                   <Text style={styles.textBorder}>Our Vision</Text>
               </TouchableOpacity>
 
-              <Text style={styles.textDetail}>haha</Text>
+              <Text style={styles.textDetail}>{this.state.aboutUs.vision}</Text>
 
               <TouchableOpacity disabled={true} style={{width:'100%'}}>
                   <Text style={styles.textBorder}>Our Contact</Text>
               </TouchableOpacity>
 
-              <Text style={styles.textDetail}>haha</Text>
+              <Text style={styles.textDetail}>{this.state.aboutUs.contact}</Text>
             </Card>
           </View>
         </ScrollView>
