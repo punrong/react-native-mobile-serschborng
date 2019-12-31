@@ -27,18 +27,6 @@ const CONTENT = [
 
 export default class OthersScreen extends React.Component {
 
-    static navigationOptions = {
-        title: 'Others',
-        headerStyle:{
-          backgroundColor:  'rgba(0,122,255,0.5)',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontSize: 20,
-          fontWeight: 'bold',
-        },
-      };
-
     render() {
       return (
         <ScrollView contentContainerStyle={{alignItems: 'center'}}>

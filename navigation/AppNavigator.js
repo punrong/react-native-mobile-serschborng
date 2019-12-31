@@ -14,22 +14,139 @@ import FeedbackScreen from "../screens/FeedBackScreen";
 import BecomeMentorScreen from "../screens/BecomeMentorScreen";
 
 const HomeStack = createStackNavigator({
-    HomeScreen: { screen: HomeScreen },
-    DetailScreen: {screen: DetailScreen},
+
+    HomeScreen: { 
+      screen: HomeScreen,
+      navigationOptions: {
+        title: 'Opportunity',
+        headerStyle:{
+          backgroundColor:  'rgba(0,122,255,0.5)',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontSize: 20,
+          fontWeight: 'bold',
+        },
+      }},
+
+    DetailScreen: {
+      screen: DetailScreen,
+      navigationOptions: {
+        title: 'Detail',
+        headerStyle:{
+          backgroundColor:  'rgba(0,122,255,0.5)',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontSize: 20,
+          fontWeight: 'bold',
+        },
+      }},
+
     MentorScreen : {screen: MentorScreen},
-    MentorProfileScreen: { screen: MentorProfileScreen },
-    SubscribeFormScreen: { screen: SubscribeFormScreen }
-},
-{
-  initialRouteName: 'HomeScreen',
-});
+
+    MentorProfileScreen: { 
+      screen: MentorProfileScreen,      
+      navigationOptions: {
+        title: 'Mentor Profile',
+        headerStyle:{
+          backgroundColor:  'rgba(0,122,255,0.5)',
+        },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+    }},
+
+    SubscribeFormScreen: { 
+      screen: SubscribeFormScreen, 
+      navigationOptions : {
+        title: 'Subscription Form',
+        headerStyle:{
+          backgroundColor:  'rgba(0,122,255,0.5)',
+        },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+    }}
+  },
+  {
+    initialRouteName: 'HomeScreen',
+  });
 
 const OtherStack = createStackNavigator({
-  OtherScreen: { screen: OtherScreen},
-  AboutUsScreen: { screen: AboutUsScreen},
-  BecomeMentorScreen: { screen: BecomeMentorScreen},
-  FeedbackScreen: {screen: FeedbackScreen}
+  OtherScreen: { 
+    screen: OtherScreen, 
+    navigationOptions : {
+      title: 'Others',
+      headerStyle:{
+        backgroundColor:  'rgba(0,122,255,0.5)',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+  }},
+  AboutUsScreen: { 
+    screen: AboutUsScreen, 
+    navigationOptions : {
+      title: 'About Us',
+      headerStyle:{
+        backgroundColor:  'rgba(0,122,255,0.5)',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+  }},
+  BecomeMentorScreen: { 
+    screen: BecomeMentorScreen, 
+    navigationOptions : {
+      title: 'Become a Mentor',
+      headerStyle:{
+        backgroundColor:  'rgba(0,122,255,0.5)',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+  }},
+  FeedbackScreen: {
+    screen: FeedbackScreen, 
+      navigationOptions : {
+      title: 'Feedback',
+      headerStyle:{
+        backgroundColor:  'rgba(0,122,255,0.5)',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+    }}
 });
+
+HomeStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible;
+    navigation.state.routes.map(route => {
+      if (route.routeName === "SplashScreen") {
+        tabBarVisible = false;
+      } else {
+        tabBarVisible = true;
+      }
+    });
+
+
+  return {
+    tabBarVisible
+  };
+};
 
 const App = createAppContainer(
     createBottomTabNavigator(
@@ -55,10 +172,6 @@ const App = createAppContainer(
   {
 
     initialRouteName: 'Home',
-    // tabBarOptions: {
-    //   activeTintColor: '#42f44b',
-    //   inactiveTintColor: 'gray',
-    // },
   }
 ));
 

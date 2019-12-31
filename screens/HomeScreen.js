@@ -7,26 +7,14 @@ import { db } from '../Firebase_Config/db_config';
   var PROGRAM_DATA =[];
   const PROGRAM_TYPE = ['exchange', 'scholarship', 'competition'];
   const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+  const DEVICE_HEIGHT = Dimensions.get('window').height;
  
 export default class HomeScreen extends React.Component {
-  //Header
-  static navigationOptions = {
-    title: 'Opportunity',
-    headerStyle:{
-      backgroundColor:  'rgba(0,122,255,0.5)',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    },
-  };
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props) 
     this.state = {
-      // modalVisible: true,
+      modalVisible: true,
       selectedIndex: 0, //Button Group index
       //Default Display: Exchange Program
       programList : []
@@ -34,9 +22,9 @@ export default class HomeScreen extends React.Component {
     this.updateIndex = this.updateIndex.bind(this)
   }
 
-  // setModalVisible(visible) {
-  //   this.setState({modalVisible: visible});
-  // }
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
 
   componentDidMount() {
     let programList = [];
@@ -62,15 +50,11 @@ export default class HomeScreen extends React.Component {
         this.setState({programList: PROGRAM_DATA.filter((item) =>{
           return item.type === PROGRAM_TYPE[0];
         })});
+        this.setState({modalVisible: false})
       });
   }
   //Update ButtonGroup Index 
   updateIndex (selectedIndex) {
-    // if(this.state.modalVisible){
-    //   this.state.modalVisible = false
-    //   this.setModalVisible(this.state.modalVisible);
-    //   selectedIndex = 0;
-    // }
     this.setState({selectedIndex});
     this.state.programList = [];
 
@@ -144,46 +128,26 @@ export default class HomeScreen extends React.Component {
     });
  }
 
- popUpDialog(){
-   if (this.state.modalVisible){
-     return(
-      <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}>
-        <View style={{justifyContent: 'center', alignItems: 'center' , flex: 1,
-          flexDirection: 'column',}}>
-              <Image  
-                    source= {{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7hOQ3Q-0my6MQG0epjxSEly2BAh8Xhni0KU9_6PvKGdEUqm_A' }} 
-                    style = {{height: DEVICE_HEIGHT/3, width: DEVICE_WIDTH*0.8, alignSelf: 'center' }}
-                    resizeMode={'contain'}
-                    PlaceholderContent={<ActivityIndicator/>}/>
-  	          <Text style={styles.textBorderLess}>A Mentoring Platform to Unlock Your True Potential</Text>
-              <TouchableOpacity
-                  style={{width:DEVICE_WIDTH/7, alignSelf: 'center'}}
-                  onPress={this.updateIndex}>
-                  <Text style={styles.textBorder}>Next</Text>
-              </TouchableOpacity>
-        </View>
-      </Modal>
-     )
-   }
- }
-
   render () {
     // "this.props.navigation" only work in render() 
     // To use it in another function, we need to pass this as a parameter
-    
     const navigation = this.props.navigation
-    if (!this.state.programList) {
-      return (
-        <ActivityIndicator
-          animating={true}
-          style={styles.indicator}
-          size="large"
-        />
-      );
-    }
+    if(this.state.modalVisible)
+      return(
+        <Modal
+        animationType="fade"
+        transparent={false}
+        visible={this.state.modalVisible}>
+      <View style={{justifyContent: 'center', alignItems: 'center' , flex: 1,
+        flexDirection: 'column',}}>
+            <Image  
+                  source= {{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7hOQ3Q-0my6MQG0epjxSEly2BAh8Xhni0KU9_6PvKGdEUqm_A' }} 
+                  style = {{height: DEVICE_HEIGHT/3, width: DEVICE_WIDTH*0.8, alignSelf: 'center' }}
+                  resizeMode={'contain'}
+                  PlaceholderContent={<ActivityIndicator/>}/>
+      </View>
+    </Modal>
+      )
     return (
       <ScrollView 
           contentContainerStyle = {styles.scrollViewStyle}
@@ -196,10 +160,6 @@ export default class HomeScreen extends React.Component {
            <View style = { styles.cardListStyle }>
              {this.renderAllCards(navigation)}
            </View>
-        }
-
-        {
-          // this.popUpDialog()
         }
       </ScrollView>     
       )

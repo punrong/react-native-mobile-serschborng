@@ -1,22 +1,10 @@
 import React from 'react';
-import { TextInput, View } from 'react-native';
+import { TextInput, View, Alert } from 'react-native';
 import {Button} from "react-native-elements";
 import { db } from '../Firebase_Config/db_config';
 import Dialog from "react-native-dialog";
 
 export default class FeedBackScreen extends React.Component {
-
-    static navigationOptions = {
-        title: 'Feedback',
-        headerStyle:{
-          backgroundColor:  'rgba(0,122,255,0.5)',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontSize: 20,
-          fontWeight: 'bold',
-        },
-      };
 
     constructor(props) {
         super(props);
@@ -29,8 +17,12 @@ export default class FeedBackScreen extends React.Component {
         db.ref('Feedbacks/').push({
           feedback
         })
-        alert('Your Feedback is submitted! Thank you!')
-        this.props.navigation.goBack();
+        Alert.alert(
+          'Feedback',
+          'Thank you for your feedback!',
+            [{text: 'OK', onPress: () => this.props.navigation.goBack()}],
+          {cancelable: false},
+        );
       }
     }
 

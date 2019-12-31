@@ -2,22 +2,11 @@ import React from 'react';
 import { Text, View, ScrollView, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Card, Image} from 'react-native-elements';
 import { db } from '../Firebase_Config/db_config';
+import AnimatedLoader from "react-native-animated-loader";
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var ABOUTUS = {}
 export default class AboutUsScreen extends React.Component {
-
-    static navigationOptions = {
-        title: 'About Us',
-        headerStyle:{
-          backgroundColor:  'rgba(0,122,255,0.5)',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontSize: 20,
-          fontWeight: 'bold',
-        },
-      };
 
       componentDidMount() {
         let AboutUS = {};
@@ -35,18 +24,31 @@ export default class AboutUsScreen extends React.Component {
               ABOUTUS= AboutUS;
             })
             this.setState({aboutUs: ABOUTUS});
-            console.log('state',this.state.aboutUs)
+            this.setState({isLoading: false})
           });
       }
 
       constructor(props){
         super(props);
         this.state={
+          isLoading: true,
           aboutUs: []
         }
       }
 
     render() {
+      if(this.state.isLoading)
+      return(
+        <AnimatedLoader
+        visible={this.state.isLoading}
+        overlayColor="rgba(255,255,255,0.75)"
+        // source={require("./loader.json")}
+        animationStyle={{    width: 100,
+          height: 100,
+        }}
+        speed={1}
+      />
+      )
       return (
         <ScrollView 
             contentContainerStyle = {styles.scrollViewStyle}

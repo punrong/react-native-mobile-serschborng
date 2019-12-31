@@ -7,17 +7,6 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 export default class DetailScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Detail',
-    headerStyle:{
-      backgroundColor:  'rgba(0,122,255,0.5)',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    },
-  }; 
 
   constructor (props) {
     super(props)
@@ -111,7 +100,6 @@ export default class DetailScreen extends React.Component {
         </ScrollView>
       );
     else {
-      console.log('detail props',this.props)
       return (
         <MentorScreen navigation={this.props.navigation}/>
       )

@@ -1,21 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import {Button, Input} from "react-native-elements";
 import { db } from '../Firebase_Config/db_config';
 
 export default class BecomeMentorScreen extends React.Component {
-
-    static navigationOptions = {
-        title: 'Become a Mentor',
-        headerStyle:{
-          backgroundColor:  'rgba(0,122,255,0.5)',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontSize: 20,
-          fontWeight: 'bold',
-        },
-      };
 
       constructor(props) {
         super(props);
@@ -44,8 +32,12 @@ export default class BecomeMentorScreen extends React.Component {
             email,
             programName
           })
-          alert('Your Information is submitted! Thank you!')
-          this.props.navigation.goBack();
+          Alert.alert(
+            'Become a mentor',
+            'Your information is submitted',
+              [{text: 'OK', onPress: () => this.props.navigation.goBack()}],
+            {cancelable: false},
+          );
         }
       }
 

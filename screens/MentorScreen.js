@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import MentorCard from '../components/MentorCard';
 import { db } from '../Firebase_Config/db_config';
+import AnimatedLoader from "react-native-animated-loader";
 
 var MENTORS = [];
 var selectedProgramID=null
@@ -11,6 +12,7 @@ export default class MentorScreen extends React.Component {
         super(props)
         selectedProgramID = props.navigation.state.params.selectedProgram.id;
         this.state = {
+            isLoading: true,
             mentorList: []
         }
     }
@@ -36,10 +38,23 @@ export default class MentorScreen extends React.Component {
             }
             })
             this.setState({mentorList: MENTORS});
+            this.setState({isLoading: false});
           });
       }
 
     render() {
+        if(this.state.isLoading)
+            return(
+                <AnimatedLoader
+                visible={this.state.isLoading}
+                overlayColor="rgba(255,255,255,0.75)"
+                // source={require("./loader.json")}
+                animationStyle={{    width: 100,
+                  height: 100,
+                }}
+                speed={1}
+              />
+            )
         const navigation = this.props.navigation;
         return (
             <ScrollView style={styles.container}>

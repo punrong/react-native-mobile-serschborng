@@ -1,21 +1,9 @@
 import React from 'react';
-import {View, TextInput} from "react-native";
+import {View, Alert} from "react-native";
 import {Button, Input} from "react-native-elements";
 import { db } from '../Firebase_Config/db_config';
 
 export default class SubscribeFormScreen extends React.Component {
-
-  static navigationOptions = {
-    title: 'Subscription Form',
-    headerStyle:{
-      backgroundColor:  'rgba(0,122,255,0.5)',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    },
-  };
 
   constructor(props) {
     super(props);
@@ -54,8 +42,12 @@ export default class SubscribeFormScreen extends React.Component {
         email,
         programName
       })
-      alert('We will contact you shortly! Thank you!')
-      this.props.navigation.goBack();
+      Alert.alert(
+        'Subcription Form',
+        'Your request is submitted',
+          [{text: 'OK', onPress: () => this.props.navigation.goBack()}],
+        {cancelable: false},
+      );
     }
   }
 

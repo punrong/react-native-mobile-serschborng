@@ -7,18 +7,6 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 
 export default class MentorProfileScreen extends React.Component {
 
-  static navigationOptions = {
-    title: 'Mentor Profile',
-    headerStyle:{
-      backgroundColor:  'rgba(0,122,255,0.5)',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    },
-  };
-
   constructor(props){
     super(props)
     var mentor = props.navigation.state.params.mentorProfile
