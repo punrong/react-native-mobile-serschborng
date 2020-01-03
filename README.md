@@ -1,6 +1,6 @@
 # Sers Chborng
 
-![Sers Chorng Logo](images/logo.png)
+![Sers Chorng Logo](resources/logo.png)
 
 Sers Chborng is a mobile application where students can find experienced senoirs or alumni who have been awarded exchange programs, scholarships and competitions.
 

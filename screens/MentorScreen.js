@@ -3,9 +3,11 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import MentorCard from '../components/MentorCard';
 import { db } from '../Firebase_Config/db_config';
 import AnimatedLoader from "react-native-animated-loader";
+import Firebase from 'firebase';
 
 var MENTORS = [];
-var selectedProgramID=null
+var selectedProgramID=null;
+// var loader;
 export default class MentorScreen extends React.Component {
     
     constructor(props){
@@ -20,27 +22,33 @@ export default class MentorScreen extends React.Component {
     componentDidMount() {
         let mentorList = [];
         MENTORS = [];
-           let ref = db.ref('Mentors/');
-           let message = ref.once('value', async (snapshot) => {
-            snapshot.forEach( await function(childSnapshot) {
-                if(childSnapshot.val().programID === selectedProgramID){
-                    mentorList = {
-                    id:  childSnapshot.val().id,
-                    name:  childSnapshot.val().name,
-                    programID: childSnapshot.val().programID,
-                    programName: childSnapshot.val().programName,
-                    imageURI:  childSnapshot.val().imageURI,
-                    appointment: childSnapshot.val().appointment,
-                    award: childSnapshot.val().award,
-                    education: childSnapshot.val().education
-              }
-                    MENTORS.push(mentorList);
-            }
-            })
-            this.setState({mentorList: MENTORS});
-            this.setState({isLoading: false});
+            db.ref('Mentors/').ref.once('value', async (snapshot) => {
+                snapshot.forEach( await function(childSnapshot) {
+                    if(childSnapshot.val().programID === selectedProgramID){
+                        mentorList = {
+                        id:  childSnapshot.val().id,
+                        name:  childSnapshot.val().name,
+                        programID: childSnapshot.val().programID,
+                        programName: childSnapshot.val().programName,
+                        imageURI: childSnapshot.val().imageURI,
+                        appointment: childSnapshot.val().appointment,
+                        award: childSnapshot.val().award,
+                        education: childSnapshot.val().education
+                }
+                        // var storageRef =  Firebase.storage().ref(mentorList.imageURI);
+                        // storageRef.getDownloadURL().then( async function(url) {
+                        //     mentorList.imageURI = url
+                        //     console.log(mentorList.imageURI);
+                        // }, function(error){
+                        //     console.log(error);
+                        // });
+                        MENTORS.push(mentorList);
+                }
+                })
+                this.setState({mentorList: MENTORS});
+                this.setState({isLoading: false});
           });
-      }
+    }
 
     render() {
         if(this.state.isLoading)
@@ -48,11 +56,11 @@ export default class MentorScreen extends React.Component {
                 <AnimatedLoader
                 visible={this.state.isLoading}
                 overlayColor="rgba(255,255,255,0.75)"
-                // source={require("./loader.json")}
+                source={require("../resources/loader.json")}
                 animationStyle={{    width: 100,
                   height: 100,
                 }}
-                speed={1}
+                speed={3}
               />
             )
         const navigation = this.props.navigation;
@@ -63,7 +71,7 @@ export default class MentorScreen extends React.Component {
                         const result = [];
                         mentorList.forEach(
                             (mentor, i) => {
-                                result.push(<MentorCard key={mentor.id} mentor={mentor} navigation={navigation} />);
+                                result.push(<MentorCard mentor={mentor} navigation={navigation} />);
                             }
                         );
                         return result;

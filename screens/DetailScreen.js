@@ -95,6 +95,19 @@ export default class DetailScreen extends React.Component {
                 </TouchableOpacity>
 
                 <Text style={styles.textDetail}>{this.state.programDetail.eligibility}</Text>
+
+                <TouchableOpacity disabled={true} style={{width:'100%'}}>
+                    <Text style={styles.textBorder}>How to apply</Text>
+                </TouchableOpacity>
+
+                <Text style={styles.textDetail}>{this.state.programDetail.apply}</Text>
+
+                <TouchableOpacity disabled={true} style={{width:'100%'}}>
+                    <Text style={styles.textBorder}>Official Link</Text>
+                </TouchableOpacity>
+
+                <Text style={styles.textDetail}>{this.state.programDetail.link}</Text>
+                
             </Card>
           </Card>
         </ScrollView>

@@ -2,7 +2,6 @@ import React from 'react';
 import { TextInput, View, Alert } from 'react-native';
 import {Button} from "react-native-elements";
 import { db } from '../Firebase_Config/db_config';
-import Dialog from "react-native-dialog";
 
 export default class FeedBackScreen extends React.Component {
 

@@ -4,52 +4,70 @@ import { Card, ListItem, Avatar } from 'react-native-elements';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
-const CONTENT = [
-        {
-          id: `O001`,
-          content: 'ABOUT US',
-          imageURI: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7hOQ3Q-0my6MQG0epjxSEly2BAh8Xhni0KU9_6PvKGdEUqm_A',
-          screen: 'AboutUsScreen'
-        },
-        {
-          id: `O002`,
-          content: 'BECOME A MENTOR?',
-          imageURI: 'https://content.thriveglobal.com/wp-content/uploads/2019/05/Top-7-qualities-of-the-best-mentors-in-a-business.png',
-          screen: 'BecomeMentorScreen'
-        },
-        {
-          id: `O003`,
-          content: 'FEEDBACK',
-          imageURI: 'https://knowyourteam.com/blog/wp-content/uploads/2019/08/giving-feedback-behavior-change-1024x429.jpg',
-          screen: 'FeedbackScreen'
-        }
-]
-
 export default class OthersScreen extends React.Component {
 
     render() {
       return (
         <ScrollView contentContainerStyle={{alignItems: 'center'}}>
-              {
-                CONTENT.map((item, i) => {
-                  return (
-                    <Card containerStyle={styles.cardContainerStyle} >
-                    <TouchableOpacity 
-                      style={{width:'100%'}}
-                      onPress={() => this.props.navigation.navigate(item.screen)}>
-
-                        <ListItem
-                          titleStyle={styles.textStyle}
-                          key={item.id}
-                          title={item.content}
-                          leftAvatar={<Avatar rounded large source={{uri: item.imageURI}} height={60} width={60}/>}
-                        />  	    
-
-                  </TouchableOpacity>
-                  </Card>
-                  );
-                })
-            }
+            <Card containerStyle={styles.cardContainerStyle} >
+                <TouchableOpacity 
+                    style={{width:'100%'}}
+                    onPress={() => this.props.navigation.navigate('AboutUsScreen')}>
+                  <ListItem
+                    titleStyle={styles.textStyle}
+                    title={'ABOUT US'}
+                    leftAvatar={
+                        <Avatar 
+                            rounded 
+                            large 
+                            source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7hOQ3Q-0my6MQG0epjxSEly2BAh8Xhni0KU9_6PvKGdEUqm_A'}} 
+                            height={60} 
+                            width={60}
+                        />
+                      }
+                  />  	    
+               </TouchableOpacity>
+            </Card>
+              
+            <Card containerStyle={styles.cardContainerStyle} >
+                <TouchableOpacity 
+                  style={{width:'100%'}}
+                  onPress={() => this.props.navigation.navigate('BecomeMentorScreen')}>
+                    <ListItem
+                        titleStyle={styles.textStyle}
+                        title={'BECOME A MENTOR?'}
+                        leftAvatar={
+                            <Avatar 
+                              rounded 
+                              large 
+                              source={{uri: 'https://content.thriveglobal.com/wp-content/uploads/2019/05/Top-7-qualities-of-the-best-mentors-in-a-business.png'}} 
+                              height={60} 
+                              width={60}
+                            />
+                        }
+                    />  	    
+                </TouchableOpacity>
+            </Card>
+            
+            <Card containerStyle={styles.cardContainerStyle} >
+              <TouchableOpacity 
+                style={{width:'100%'}}
+                onPress={() => this.props.navigation.navigate('FeedbackScreen')}>
+                  <ListItem
+                    titleStyle={styles.textStyle}
+                    title={'FEEDBACK'}
+                    leftAvatar={
+                        <Avatar 
+                          rounded 
+                          large 
+                          source={{uri: 'https://knowyourteam.com/blog/wp-content/uploads/2019/08/giving-feedback-behavior-change-1024x429.jpg'}} 
+                          height={60} 
+                          width={60}
+                        />
+                      }
+                  />  	    
+                </TouchableOpacity>
+             </Card>
         </ScrollView>
       );
     }

@@ -1,7 +1,8 @@
 import React from 'react';
 import {Button} from "react-native-elements";
-import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import firebase from 'firebase';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const defaultStyleConfig = {
@@ -26,7 +27,8 @@ const MentorCard = (props) => {
 
             <Image 
                 style={[styles.imageStyle, styles.createMarginBottom]} 
-                source={{ uri: props.mentor.imageURI }} />
+                source={{ uri: props.mentor.imageURI }}
+                PlaceholderContent={<ActivityIndicator/>}/>
 
             <Text style={[
                 styles.textStyle,

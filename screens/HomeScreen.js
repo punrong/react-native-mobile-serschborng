@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, Modal, Text, Dimensions, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, View, Modal, Dimensions, Image, ActivityIndicator, Alert, NetInfo, Platform } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import ProgramCard from '../components/ProgramCard';
 import { db } from '../Firebase_Config/db_config';
@@ -28,8 +28,8 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount() {
     let programList = [];
-       let ref = db.ref('Programs/');
-       let message = ref.once('value', async (snapshot) => {
+    this.CheckConnectivity()
+      db.ref('Programs/').once('value', async (snapshot) => {
         snapshot.forEach( await function(childSnapshot) {
           programList = {
             id:  childSnapshot.val().id,
@@ -53,6 +53,45 @@ export default class HomeScreen extends React.Component {
         this.setState({modalVisible: false})
       });
   }
+
+  CheckConnectivity = () => {
+    // For Android devices
+    if (Platform.OS === "android") {
+      NetInfo.isConnected.fetch().then(isConnected => {
+        if (isConnected === false) {
+          Alert.alert(
+            'Internet Status',
+            'No internet connection!\nPlease turn it on!',
+              [{text: 'OK'}],
+            {cancelable: false},
+          );
+        }
+      });
+    } else {
+      // For iOS devices
+      NetInfo.isConnected.addEventListener(
+        "connectionChange",
+        this.handleFirstConnectivityChange
+      );
+    }
+  };
+
+  handleFirstConnectivityChange = isConnected => {
+    NetInfo.isConnected.removeEventListener(
+      "connectionChange",
+      this.handleFirstConnectivityChange
+    );
+
+    if (isConnected === false) {
+      Alert.alert(
+        'Internet Status',
+        'No internet connection!\nPlease turn it on!',
+          [{text: 'OK'}],
+        {cancelable: false},
+      );
+    }
+  };
+
   //Update ButtonGroup Index 
   updateIndex (selectedIndex) {
     this.setState({selectedIndex});
@@ -141,7 +180,7 @@ export default class HomeScreen extends React.Component {
       <View style={{justifyContent: 'center', alignItems: 'center' , flex: 1,
         flexDirection: 'column',}}>
             <Image  
-                  source= {{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7hOQ3Q-0my6MQG0epjxSEly2BAh8Xhni0KU9_6PvKGdEUqm_A' }} 
+                  source= {require('../resources/logo.png')} 
                   style = {{height: DEVICE_HEIGHT/3, width: DEVICE_WIDTH*0.8, alignSelf: 'center' }}
                   resizeMode={'contain'}
                   PlaceholderContent={<ActivityIndicator/>}/>

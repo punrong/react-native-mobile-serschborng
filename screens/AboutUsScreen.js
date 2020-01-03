@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { Card, Image} from 'react-native-elements';
 import { db } from '../Firebase_Config/db_config';
 import AnimatedLoader from "react-native-animated-loader";
@@ -11,8 +11,7 @@ export default class AboutUsScreen extends React.Component {
       componentDidMount() {
         let AboutUS = {};
         ABOUTUS={}
-           let ref = db.ref('AboutUS/');
-           let message = ref.once('value', async (snapshot) => {
+          db.ref('AboutUS/'). ref.once('value', async (snapshot) => {
             snapshot.forEach( await function(childSnapshot) {
               AboutUS = {
                 value:  childSnapshot.val().value,
@@ -40,14 +39,14 @@ export default class AboutUsScreen extends React.Component {
       if(this.state.isLoading)
       return(
         <AnimatedLoader
-        visible={this.state.isLoading}
-        overlayColor="rgba(255,255,255,0.75)"
-        // source={require("./loader.json")}
-        animationStyle={{    width: 100,
-          height: 100,
-        }}
-        speed={1}
-      />
+            visible={this.state.isLoading}
+            overlayColor="rgba(255,255,255,0.75)"
+            source={require("../resources/loader.json")}
+            animationStyle={{    width: 100,
+              height: 100,
+            }}
+            speed={3}
+        />
       )
       return (
         <ScrollView 
@@ -57,9 +56,8 @@ export default class AboutUsScreen extends React.Component {
             <Card
               containerStyle = {styles.cardImageContainerStyle}>
               <Image
-                  source= {{ uri: this.state.aboutUs.imageURI }} 
-                  style = {{height: DEVICE_WIDTH/3, width: DEVICE_WIDTH/3, margin: 5 }}
-                  PlaceholderContent={<ActivityIndicator/>}/>
+                  source= {require('../resources/logo.png')} 
+                  style = {{height: DEVICE_WIDTH/3, width: DEVICE_WIDTH/3, margin: 5 }}/>
             </Card>
               
             <Card
@@ -70,7 +68,7 @@ export default class AboutUsScreen extends React.Component {
                   <Text style={styles.textBorder}>Our Value</Text>
               </TouchableOpacity>
 
-              <Text style={styles.textDetail}>{this.state.aboutUs.value}</Text>
+              <Text style={{ fontSize: 14, textAlign: "center" }}>{this.state.aboutUs.value}</Text>
 
               <TouchableOpacity disabled={true} style={{width:'100%'}}>
                   <Text style={styles.textBorder}>Our Mission</Text>
@@ -88,7 +86,7 @@ export default class AboutUsScreen extends React.Component {
                   <Text style={styles.textBorder}>Our Contact</Text>
               </TouchableOpacity>
 
-              <Text style={styles.textDetail}>{this.state.aboutUs.contact}</Text>
+              <Text style={{fontSize: 14, textAlign: "center"}}>{this.state.aboutUs.contact}</Text>
             </Card>
           </View>
         </ScrollView>
