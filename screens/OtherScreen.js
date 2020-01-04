@@ -20,7 +20,7 @@ export default class OthersScreen extends React.Component {
                         <Avatar 
                             rounded 
                             large 
-                            source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7hOQ3Q-0my6MQG0epjxSEly2BAh8Xhni0KU9_6PvKGdEUqm_A'}} 
+                            source={require('../resources/logo.png')} 
                             height={60} 
                             width={60}
                         />
