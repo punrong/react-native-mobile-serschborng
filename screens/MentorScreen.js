@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import MentorCard from '../components/MentorCard';
 import { db } from '../Firebase_Config/db_config';
 import AnimatedLoader from "react-native-animated-loader";
-import Firebase from 'firebase';
 
 var MENTORS = [];
 var selectedProgramID=null;
@@ -35,13 +34,6 @@ export default class MentorScreen extends React.Component {
                         award: childSnapshot.val().award,
                         education: childSnapshot.val().education
                 }
-                        // var storageRef =  Firebase.storage().ref(mentorList.imageURI);
-                        // storageRef.getDownloadURL().then( async function(url) {
-                        //     mentorList.imageURI = url
-                        //     console.log(mentorList.imageURI);
-                        // }, function(error){
-                        //     console.log(error);
-                        // });
                         MENTORS.push(mentorList);
                 }
                 })
