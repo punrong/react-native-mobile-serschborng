@@ -17,4 +17,7 @@ npm install -g expo-cli
 ```bash
 1. npm install react-native-elements
 2. npm install react-navigation
+3. npm install react-native-animated-loader
+4. npm install firebase
+5. npm install react-native-vector-icons
 ```
