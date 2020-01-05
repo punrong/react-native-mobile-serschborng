@@ -23,6 +23,14 @@ export default class FeedBackScreen extends React.Component {
           {cancelable: false},
         );
       }
+      else{
+        Alert.alert(
+          'Feedback',
+          'Please complete your feedback!',
+            [{text: 'OK'}],
+          {cancelable: false},
+        );
+      }
     }
 
     render() {

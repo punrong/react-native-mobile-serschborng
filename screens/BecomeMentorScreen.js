@@ -34,10 +34,20 @@ export default class BecomeMentorScreen extends React.Component {
           })
           Alert.alert(
             'Become a mentor',
-            'Your information is submitted',
+            'Your information is submitted!\nThank you!',
               [{text: 'OK', onPress: () => this.props.navigation.goBack()}],
             {cancelable: false},
           );
+        }
+        if(firstName ==='' || lastName ==='' ||
+            phoneNumber ==='' || email ==='' ||
+            programName ===''){
+              Alert.alert(
+                'Become a mentor',
+                'Please complete all of the information',
+                  [{text: 'OK'}],
+                {cancelable: false},
+              );
         }
       }
 

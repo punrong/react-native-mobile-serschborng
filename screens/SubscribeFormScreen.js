@@ -31,6 +31,15 @@ export default class SubscribeFormScreen extends React.Component {
     lastName = this.state.lastName
     phoneNumber = this.state.phoneNumber
     email = this.state.email
+    if(firstName ==='' || lastName ==='' ||
+        phoneNumber ==='' || email ==='' ||
+        programName ==='' || mentorName === '')
+      Alert.alert(
+        'Subcription Form',
+        'Please complete all of the information',
+          [{text: 'OK'}],
+        {cancelable: false},
+      );
     if(firstName !=='' && lastName !=='' &&
         phoneNumber !=='' && email !=='' &&
         programName !=='' && mentorName !== ''){
@@ -44,7 +53,7 @@ export default class SubscribeFormScreen extends React.Component {
       })
       Alert.alert(
         'Subcription Form',
-        'Your request is submitted',
+        'Your request is submitted!\nWe will contact you!\nThank you!',
           [{text: 'OK', onPress: () => this.props.navigation.goBack()}],
         {cancelable: false},
       );
