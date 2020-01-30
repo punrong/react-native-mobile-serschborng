@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./resources/logo.png",
     "splash": {
@@ -24,7 +24,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.serschborng.SersChborng"
+    },
+    "android": {
+      "package": "com.serschborng.SersChborng",
+      "versionCode": 2
     }
   }
 }
